@@ -11,6 +11,6 @@ export type Token = {
     target: string;
 };
 declare function genToken(ch: string): Token;
-declare function parse(str: string): any[];
+declare function parse(str: string): Token[];
 declare function convertToPinyin(str: string, separator?: string, upperCase?: boolean): string;
 export { convertToPinyin, genToken, isSupported, parse, patchDict };
