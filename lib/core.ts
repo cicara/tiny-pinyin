@@ -130,9 +130,6 @@ function genToken(ch: string) {
 }
 
 function parse(str: string): any[] {
-  // if (typeof str !== "string") {
-  //   throw new Error("argument should be string.");
-  // }
   if (!isSupported()) {
     throw new Error("not support Intl or zh-CN language.");
   }
@@ -141,6 +138,19 @@ function parse(str: string): any[] {
 
 function convertToPinyin(str: string, separator?: string, upperCase?: boolean) {
   return parse(str)
+    .reduce<Token[]>((tokens, current, index, array) => {
+      if (tokens.length > 0) {
+        const token = tokens[tokens.length - 1];
+        if (token.type === TokenType.LATIN && current.type === TokenType.LATIN) {
+          token.source += current.source;
+          token.target += current.target;
+          tokens[tokens.length - 1] = token;
+          return tokens;
+        }
+      }
+      tokens.push(current);
+      return tokens;
+    }, [])
     .map((v) => {
       if (!upperCase && v.type === TokenType.PINYIN) {
         return v.target.toLowerCase();

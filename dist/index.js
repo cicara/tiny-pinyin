@@ -868,61 +868,68 @@ const a = [
   郍: "NA",
   芎: "XIONG",
   谁: "SHUI"
-}, o = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, g = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   EXCEPTIONS: i,
   PINYINS: l,
   UNIHANS: a
-}, Symbol.toStringTag, { value: "Module" })), L = "阿", g = "鿿";
-let G = null, H;
+}, Symbol.toStringTag, { value: "Module" })), o = "阿", L = "鿿";
+let H = null, e;
 function f(N) {
-  N && (typeof N == "function" && (N = [N]), Array.isArray(N) && N.forEach((I) => {
-    typeof I == "function" && I(o);
+  N && (typeof N == "function" && (N = [N]), Array.isArray(N) && N.forEach((t) => {
+    typeof t == "function" && t(g);
   }));
 }
 function S(N) {
-  return !N && G !== null || (typeof Intl == "object" && Intl.Collator ? (H = new Intl.Collator(["zh-Hans-CN", "zh-CN"]), G = Intl.Collator.supportedLocalesOf(["zh-CN"]).length === 1) : G = !1), G;
+  return !N && H !== null || (typeof Intl == "object" && Intl.Collator ? (e = new Intl.Collator(["zh-Hans-CN", "zh-CN"]), H = Intl.Collator.supportedLocalesOf(["zh-CN"]).length === 1) : H = !1), H;
 }
 var u = /* @__PURE__ */ ((N) => (N[N.LATIN = 1] = "LATIN", N[N.PINYIN = 2] = "PINYIN", N[N.UNKNOWN = 3] = "UNKNOWN", N))(u || {});
 function n(N) {
-  const I = a, e = l, O = i, A = {
+  const t = a, E = l, I = i, A = {
     type: 3,
     source: N,
     target: N
   };
-  if (N in O)
-    return A.type = 2, A.target = O[N], A;
-  let t = -1, U;
+  if (N in I)
+    return A.type = 2, A.target = I[N], A;
+  let O = -1, U;
   if (N.charCodeAt(0) < 256)
     return A.type = 1, A.target = N, A;
-  if (U = H.compare(N, L), U < 0)
+  if (U = e.compare(N, o), U < 0)
     return A.type = 3, A.target = N, A;
   if (U === 0)
-    A.type = 2, t = 0;
+    A.type = 2, O = 0;
   else {
-    if (U = H.compare(N, g), U > 0)
+    if (U = e.compare(N, L), U > 0)
       return A.type = 3, A.target = N, A;
-    U === 0 && (A.type = 2, t = I.length - 1);
+    U === 0 && (A.type = 2, O = t.length - 1);
   }
-  if (A.type = 2, t < 0) {
-    let E = 0, r = I.length - 1;
-    for (; E <= r; ) {
-      t = ~~((E + r) / 2);
-      let C = I[t];
-      if (U = H.compare(N, C), U === 0)
+  if (A.type = 2, O < 0) {
+    let G = 0, r = t.length - 1;
+    for (; G <= r; ) {
+      O = ~~((G + r) / 2);
+      let C = t[O];
+      if (U = e.compare(N, C), U === 0)
         break;
-      U > 0 ? E = t + 1 : r = t - 1;
+      U > 0 ? G = O + 1 : r = O - 1;
     }
   }
-  return U < 0 && t--, A.target = e[t], A.target || (A.type = 3, A.target = A.source), A;
+  return U < 0 && O--, A.target = E[O], A.target || (A.type = 3, A.target = A.source), A;
 }
 function Z(N) {
   if (!S())
     throw new Error("not support Intl or zh-CN language.");
-  return N.split("").map((I) => n(I));
+  return N.split("").map((t) => n(t));
 }
-function P(N, I, e) {
-  return Z(N).map((O) => !e && O.type === 2 ? O.target.toLowerCase() : O.target).join(I || "");
+function P(N, t, E) {
+  return Z(N).reduce((I, A, O, U) => {
+    if (I.length > 0) {
+      const G = I[I.length - 1];
+      if (G.type === 1 && A.type === 1)
+        return G.source += A.source, G.target += A.target, I[I.length - 1] = G, I;
+    }
+    return I.push(A), I;
+  }, []).map((I) => !E && I.type === 2 ? I.target.toLowerCase() : I.target).join(t || "");
 }
 const X = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
@@ -933,7 +940,7 @@ const X = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   parse: Z,
   patchDict: f
 }, Symbol.toStringTag, { value: "Module" }));
-function s(N) {
+function p(N) {
   N.EXCEPTIONS = {
     嗲: "DIA",
     // DIE 嗲
@@ -969,10 +976,10 @@ function s(N) {
     // 钶
   }, N.UNIHANS[91] = "伕", N.UNIHANS[347] = "仚", N.UNIHANS[393] = "诌", N.UNIHANS[39] = "婤", N.UNIHANS[50] = "腠", N.UNIHANS[369] = "攸", N.UNIHANS[123] = "乯", N.UNIHANS[171] = "刕", N.UNIHANS[102] = "佝", N.UNIHANS[126] = "犿", N.UNIHANS[176] = "列", N.UNIHANS[178] = "刢", N.UNIHANS[252] = "娝", N.UNIHANS[330] = "偸";
 }
-function p(N) {
+function s(N) {
   return typeof N != "function" ? !1 : N("伕").target === "FOU" && N("仚").target === "XIA" && N("诌").target === "ZHONG" && N("婤").target === "CHONG" && N("腠").target === "CONG" && N("攸").target === "YONG" && N("乯").target === "HOU" && N("刕").target === "LENG" && N("佝").target === "GONG" && N("犿").target === "HUAI" && N("列").target === "LIAO" && N("刢").target === "LIN" && N("钶").target === "E";
 }
-S() && p(n) && f(s);
+S() && s(n) && f(p);
 export {
   X as default
 };
