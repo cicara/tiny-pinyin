@@ -1,7 +1,7 @@
 {
   "name": "@cicara/tiny-pinyin",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "lightweight chinese character to pinyin library",
   "scripts": {
     "dev": "vite",
