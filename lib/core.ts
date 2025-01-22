@@ -129,7 +129,7 @@ function genToken(ch: string) {
   return token;
 }
 
-function parse(str: string): any[] {
+function parse(str: string): Token[] {
   if (!isSupported()) {
     throw new Error("not support Intl or zh-CN language.");
   }
@@ -141,7 +141,12 @@ function convertToPinyin(str: string, separator?: string, upperCase?: boolean) {
     .reduce<Token[]>((tokens, current, index, array) => {
       if (tokens.length > 0) {
         const token = tokens[tokens.length - 1];
-        if (token.type === TokenType.LATIN && current.type === TokenType.LATIN) {
+        const shouldMerge =
+          token.type === TokenType.LATIN &&
+          current.type === TokenType.LATIN &&
+          ((token.target.trim() !== "" && current.target.trim() !== "") ||
+            (token.target.trim() === "" && current.target.trim() === ""));
+        if (shouldMerge) {
           token.source += current.source;
           token.target += current.target;
           tokens[tokens.length - 1] = token;
@@ -151,11 +156,14 @@ function convertToPinyin(str: string, separator?: string, upperCase?: boolean) {
       tokens.push(current);
       return tokens;
     }, [])
-    .map((v) => {
-      if (!upperCase && v.type === TokenType.PINYIN) {
-        return v.target.toLowerCase();
+    .filter((token) => {
+      return token.target.trim() !== "";
+    })
+    .map((token) => {
+      if (!upperCase && token.type === TokenType.PINYIN) {
+        return token.target.toLowerCase();
       }
-      return v.target;
+      return token.target;
     })
     .join(separator || "");
 }
